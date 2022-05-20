@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './App';
-import { /*YourProvider*/ } from './context/';
+import { AppProvider } from './context/AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    {/* <YourProvider> */}
+    <AppProvider>
       <App />
-    {/* </YourProvider> */}
+    </AppProvider>
   </React.StrictMode>
 );

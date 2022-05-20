@@ -5,7 +5,7 @@ import {
   HashRouter as Router,
 } from "react-router-dom";
 import { HomePage } from "../pages/index";
-import Navbar from "./index";
+import {Navbar} from "./index";
 
 
 const Navigation = () => {

@@ -1,4 +1,4 @@
-import { infuraId } from "../utils/constants";
+import { infuraId } from "../utils/app-constants";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -43,6 +43,12 @@ const library = async () => {
     return library;
 }
 
+const  signer = async () => {
+    const lib = await library();
+    const signer = lib.getSigner();
+    return signer;
+};
+
 
 /**
  * @description
@@ -64,7 +70,7 @@ const disconnect = async () => {
 }
 
 // verify userNetwork 
-const verifyNetwork = async (networkId, networkRpc) => {
+const verifyNetwork = async (networkId, networkName, networkRpc) => {
     const lib = await library();
     const userNetwork = await lib.getNetwork();
     console.log('=> user network Id', userNetwork.chainId);
@@ -75,11 +81,11 @@ const verifyNetwork = async (networkId, networkRpc) => {
             title: "Wrong Network",
             confirmButtonText: "Switch",
             text: "please switch to the correct network",
-            width:'auto'
-        }).then(async (result) =>   {
+            width: 'auto'
+        }).then(async (result) => {
             if (result.isConfirmed) {
-               const switchN = await switchNetwork(networkId, networkRpc);
-               return switchN;
+                const switchN = await switchNetwork(networkId, networkName, networkRpc);
+                return switchN;
             }
         });
     }
@@ -87,7 +93,7 @@ const verifyNetwork = async (networkId, networkRpc) => {
 }
 
 // switch network if wrong
-const switchNetwork = async (chainId, rpc) => {
+const switchNetwork = async (chainId, chainName, rpc) => {
     const lib = await library();
     try {
         await lib.provider.request({
@@ -100,11 +106,15 @@ const switchNetwork = async (chainId, rpc) => {
         console.log("switch network error", switchError);
         if (switchError.code === 4902) {
             try {
-                await library.provider.request({
+                console.log('=> chainId', `0x${chainId}`);
+                console.log('=> rpc', rpc);
+
+                await lib.provider.request({
                     method: "wallet_addEthereumChain",
                     params: [
                         {
                             chainId: `0x${Number(chainId).toString(16)}`,
+                            chainName: chainName.toString(),
                             rpcUrls: [rpc] /* ... */,
                         },
                     ],
@@ -117,4 +127,5 @@ const switchNetwork = async (chainId, rpc) => {
 }
 
 
-export { connect, disconnect, verifyNetwork, switchNetwork, provider, web3Modal, library };
+
+export { connect, disconnect, verifyNetwork, switchNetwork, provider, web3Modal, library, signer };

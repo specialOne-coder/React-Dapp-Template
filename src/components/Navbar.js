@@ -5,12 +5,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import { shortenAddress } from "../utils/ShortAdress";
 import { FaHammer} from "react-icons/fa";
 import hlogo from '../assets/ethereum.png';
+import { AppContext } from "../context/AppContext";
 
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  const { currentAccount, connectWallet } = useContext(/*Your context*/);
+  const { currentAccount, connectWallet } = useContext(AppContext);
 
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
@@ -18,7 +19,7 @@ const Navbar = () => {
         <div className="text-white md:flex  list-none fex-row justify-between items-center fex-initial">
           <div className="menu-transition bg-[#2952e3] py-1 px-3 mx-4 rounded-lg cursor-pointer hover:bg-[#2546bd]">
             <Link to="/">
-              <img className="head_logo" src={hlogo}/>
+              <img className="head_logo w-10" src={hlogo} />
             </Link>
           </div>
         </div>
@@ -33,10 +34,7 @@ const Navbar = () => {
         <li className="menu-transition mx-4 cursor-pointer border-b-2 border-transparent hover:border-blue-600">
           <Link to="/"> Item</Link>
         </li>
-        <li className="mx-4 cursor-pointer">
-          <Drop />
-        </li>
-        <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-lg cursor-pointer hover:bg-[#2546bd] animate-pulse">
+        <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-lg cursor-pointer hover:bg-[#2546bd]">
           <button onClick={connectWallet}>
             {!currentAccount
               ? "Connect Wallet"
@@ -71,7 +69,7 @@ const Navbar = () => {
             <li className="mx-4 cursor-pointer">
               <button
                 className='flex flex-row items-center my-2 border-solid border-2  mr-2 bg-[#fff] rounded-md cursor-pointer h-8 w-40 place-content-center'>
-                <FaHome fontSize={20} className="text-white text-center pr-1" color="#2546bd" />
+                <FaHammer fontSize={20} className="text-white text-center pr-1" color="#2546bd" />
                 <p className="text-[#2546bd] font-bold  pr-1 pl-1">
                   <Link to="/"> Item</Link>
                 </p>
@@ -102,15 +100,6 @@ const Navbar = () => {
                 <FaHammer fontSize={20} className="text-white text-center pr-1" color="#2546bd" />
                 <p className="text-[#2546bd] font-bold  pr-1 pl-1">
                   <Link to="/"> Item</Link>
-                </p>
-              </button>
-            </li>
-            <li className="mx-4 cursor-pointer">
-            <button
-                className='flex flex-row items-center my-2 border-solid border-2  mr-2 bg-[#fff] rounded-md cursor-pointer h-8 w-40 place-content-center'>
-                <FaHammer fontSize={20} className="text-white text-center pr-1" color="#2546bd" />
-                <p className="text-[#2546bd] font-bold  pr-1 pl-1">
-                  <Drop />
                 </p>
               </button>
             </li>
